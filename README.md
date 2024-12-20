@@ -92,7 +92,7 @@ cf. Original CALIOPER의 Dep-F1는 70.1
 ```
 2. **명령행**
 ```
-python main.py --train\_data fm\_yunseok --test\_data fm\_yunseok --main\_encoder beomi/kcbert-large --context\_encoder beomi/kcbert-large --batch\_size 32 --gpus 0 --repeat 5 --epochs 20 --mean\_pooling
+python main.py --train_data fm_yunseok --test_data fm_yunseok --main_encoder beomi/kcbert-large --context_encoder beomi/kcbert-large --batch_size 32 --gpus 0 --repeat 5 --epochs 20 --mean_pooling
 ```
 
 ## 일러두기
