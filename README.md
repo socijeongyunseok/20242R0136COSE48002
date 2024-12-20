@@ -26,6 +26,9 @@ Korean Context-Aware Offensive Language Detection - Focusing on Hate Speech towa
 * **맞춤 손실 함수**:
 
   * 주요 혐오와 맥락 의존적 혐오를 결합한 손실 계산.
+ 
+* **한국어 데이터셋**
+* 본 연구는 혐오 데이터셋을 확보하기 위하여 FM코리아 게시글 약 12만 건을 크롤링하여, 게시글과 댓글의 위계 구조를 보존한 채로 previous utterance를 형성하였으며, 이 중 2만 건을 선정 6개의 다중 레이블을 활용하게 하였다.
 
 ## 기존 모델과의 비교 요약
 
