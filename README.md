@@ -2,7 +2,7 @@ CALIOPER Korean Version
 ===
 
 Korean Context-Aware Offensive Language Detection - Focusing on Hate Speech toward Disability
-![image.png](./image.png)
+<img width="636" alt="Model_Structure" src="https://github.com/user-attachments/assets/241ff0aa-1f9e-4c7a-949c-353a80f567e6" />
 
 ## 들어가며
 
@@ -27,6 +27,50 @@ Korean Context-Aware Offensive Language Detection - Focusing on Hate Speech towa
 
   * 주요 혐오와 맥락 의존적 혐오를 결합한 손실 계산.
 
+## 기존 모델과의 비교 요약
+
+| 항목                    | 기존 CALIOPER               | 개선된 모델                          |
+|-------------------------|-----------------------------|--------------------------------------|
+| 언어 지원               | 영어 중심                  | 한국어 중심(kcbert 등)                |
+| 문장 임베딩 방식        | [CLS] 토큰                | Mean Pooling/Trainable Attention 적용 |
+| 맥락 정보 처리 방식     | 단순 Attention            | Key/Value Transform Attention, Caching|
+| 멀티레이블 확장         | 제한적                     | 멀티레이블 분류 기반 확장 용이        |
+| 평가 전략               | 단순 Train/Test 분리       | K-Fold 검증, 다양한 메트릭(F1, dep-F1)|
+| 결과 관리               | 단순 저장                  | 명확한 파일명 규칙, CSV 분석 결과 기록 |
+
+---
+
+## 최종 F1 Score
+
+| Fold | Valid Micro F1 | Valid Macro F1 | Best Valid Micro F1 | Best Valid Macro F1 |
+|------|----------------------|---------------------|---------------------------|---------------------------|
+| 1    | 0.7465               | 0.7043              | 0.8329                    | 0.7904                    |
+| 2    | 0.7298               | 0.7002              | 0.8286                    | 0.7886                    |
+| 3    | 0.7312               | 0.6481              | 0.8266                    | 0.7866                    |
+| 4    | 0.7474               | 0.7121              | 0.8308                    | 0.7845                    |
+| 5    | 0.7274               | 0.6951              | 0.8304                    | 0.7898                    |
+
+cf. Original CALIOPER의 Dep-F1는 70.1 
+
+---
+
+## 각 레이블 별 성능
+
+| Category                         | Precision | Recall | F1-Score | Support |
+|----------------------------------|-----------|--------|----------|---------|
+| offensive                        | 0.8       | 0.834  | 0.818    | 842.2   |
+| context_dependent                | 0.906     | 1      | 0.95     | 2211.2  |
+| offensiveness_disabled           | 0.778     | 0.8    | 0.788    | 1093    |
+| context_offensiveness_disabled   | 0.748     | 0.84   | 0.79     | 1207.2  |
+| hate_speech_disabled             | 0.686     | 0.694  | 0.692    | 404.4   |
+| context_hate_speech_disabled     | 0.618     | 0.794  | 0.692    | 729.6   |
+
+| Category                         | Precision | Recall | F1-Score | Support |
+|----------------------------------|-----------|--------|----------|---------|
+| micro_avg                        | 0.79      | 0.872  | 0.83     | 6487.6  |
+| macro_avg                        | 0.756     | 0.828  | 0.788    | 6487.6  |
+| weighted_avg                     | 0.796     | 0.872  | 0.83     | 6487.6  |
+| samples_avg                      | 0.778     | 0.808  | 0.758    | 6487.6  |
 
 ## 데이터셋
 
@@ -47,9 +91,6 @@ Korean Context-Aware Offensive Language Detection - Focusing on Hate Speech towa
 ```
 python main.py --train\_data fm\_yunseok --test\_data fm\_yunseok --main\_encoder beomi/kcbert-large --context\_encoder beomi/kcbert-large --batch\_size 32 --gpus 0 --repeat 5 --epochs 20 --mean\_pooling
 ```
-## 결과
-![image.png](./image.png)
-
 
 ## 일러두기
 본 연구는 CALIOPER(Mingi shin, 2023)의 연구에 기반하여 만들어졌음.
